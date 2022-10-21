@@ -24,22 +24,65 @@ function getComputerChoice() {
 // Lose Condition: inverse of above
 
 function playRound(playerSelection, computerSelection) {
+  let winner;
   const playerChoice = playerSelection.toLowerCase();
   const computerChoice = computerSelection();
-  console.log(`Player: ${playerChoice}`);
-  console.log(`Computer: ${computerChoice}`);
+  // console.log(`Player: ${playerChoice}`);
+  // console.log(`Computer: ${computerChoice}`);
   switch (true) {
     case (playerChoice === computerChoice):
-      return `Tie! ${playerChoice} = ${computerChoice}`;
+      winner = 'player';
+      console.log(`Tie! ${playerChoice} = ${computerChoice}`);
+      break;
     case (playerChoice === 'rock' && computerChoice === 'scissors'):
-      return `You Win! ${playerChoice} beats ${computerChoice}`;
+      winner = 'player';
+      console.log(`You Win! ${playerChoice} beats ${computerChoice}`);
+      break;
     case (playerChoice === 'paper' && computerChoice === 'rock'):
-      return `You Win! ${playerChoice} beats ${computerChoice}`;
+      winner = 'player';
+      console.log(`You Win! ${playerChoice} beats ${computerChoice}`);
+      break;
     case (playerChoice === 'scissors' && computerChoice === 'paper'):
-      return `You Win! ${playerChoice} beats ${computerChoice}`;
+      winner = 'player';
+      console.log(`You Win! ${playerChoice} beats ${computerChoice}`);
+      break;
     default: 
-      return `You Lose... ${computerChoice} beats ${playerChoice}`;
+      winner = 'computer';
+      console.log(`You Lose... ${computerChoice} beats ${playerChoice}`);
+  } 
+  // return winner
+  return winner;
+}
+
+// implement a function named game()
+// function should invoke playRound function inside this function 
+// playRound function should be executed for 5 rounds
+// game() should keep score of each round 
+// game() should report a winner and loser at the end of 5 rounds
+
+function game() {
+  let playerTally = [];
+  let computerTally = [];
+  let matchWinner
+  for(let i = 0; i < 5; i++) {
+    let roundWinner;
+    roundWinner = playRound(prompt('Pick: Rock, Paper, or Scissors'), getComputerChoice);
+    // Add up tally of round win
+    roundWinner === 'player' ? playerTally.push('win') : computerTally.push('win');
+  }
+
+  //report winner and loser at the end of 5 rounds
+  if(playerTally.length === computerTally.length) matchWinner = 'tie';
+
+  playerTally.length > computerTally.length ? matchWinner = 'player' : matchWinner = 'computer';
+
+  if(matchWinner === 'tie') {
+    console.log(`It is a tie. Player: ${playerTally.length} Computer: ${computerTally.length}`);
+  } else if (matchWinner === 'player') {
+    console.log(`You Win! Player: ${playerTally.length} Computer: ${computerTally.length}`);
+  } else {
+    console.log(`You Lose... Player: ${playerTally.length} Computer: ${computerTally.length}`);
   }
 }
 
-console.log(playRound('paper', getComputerChoice));
+game();
